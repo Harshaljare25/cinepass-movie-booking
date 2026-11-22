@@ -1,5 +1,4 @@
-# Multi-stage lightweight Node.js Dockerfile for CinePass
-FROM node:20-alpine AS runner
+FROM node:20-slim
 
 WORKDIR /app
 
@@ -8,7 +7,7 @@ ENV PORT=3000
 
 # Install dependencies
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Copy application files
 COPY . .
