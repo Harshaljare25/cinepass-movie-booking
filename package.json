@@ -2,12 +2,12 @@
   "name": "cinepass-movie-booking",
   "version": "1.0.0",
   "description": "Online Movie Ticket Booking Website with HTML, CSS, JavaScript and Live MySQL Database",
-  "main": "server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "clean-demo": "node scripts/clean-demo.js",
-    "seed": "node -e \"require('./db/connection').initializeDatabase().then(() => process.exit(0))\""
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "clean-demo": "node backend/scripts/clean-demo.js",
+    "seed": "node -e \"require('./backend/db/connection').initializeDatabase().then(() => process.exit(0))\""
   },
   "keywords": [],
   "author": "",

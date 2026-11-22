@@ -2,6 +2,8 @@
  * Standalone script to clean demo bookings from the database
  * Run via: npm run clean-demo
  */
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 require('dotenv').config();
 const { initializeDatabase, cleanDemoData } = require('../db/connection');
 
