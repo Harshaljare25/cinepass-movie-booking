@@ -3,7 +3,12 @@
  */
 
 const isFileProtocol = typeof window !== 'undefined' && window.location.protocol === 'file:';
-const API_BASE = isFileProtocol ? 'http://localhost:3000/api' : '/api';
+const isLocalHost = typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+const API_BASE = (isFileProtocol || isLocalHost)
+  ? 'http://localhost:3000/api'
+  : 'https://cinepass-movie-booking-w0us.onrender.com/api';
 
 // If opened directly from file explorer, show a helpful top bar notification
 if (isFileProtocol) {
