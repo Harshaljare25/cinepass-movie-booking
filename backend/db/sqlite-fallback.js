@@ -16,8 +16,7 @@ function normalizeQuery(sql) {
     .replace(/\bNOW\(\)/gi, "DATETIME('now', 'localtime')")
     .replace(/\bVERSION\(\)/gi, "'SQLite 3.50 (Self-Contained Live Engine)'")
     .replace(/\bCURDATE\(\)/gi, "DATE('now', 'localtime')")
-    .replace(/DATE_ADD\(CURDATE\(\),\s*INTERVAL\s*(\?|\d+)\s*DAY\)/gi, "DATE('now', 'localtime', '+' || $1 || ' days')")
-    .replace(/\bFOR UPDATE\b/gi, "")
+    .replace(/DATE_ADD\(CURDATE\(\),\s*INTERVAL\s*(\?|\d+)\s*DAY\)/gi, "DATE('now', 'localtime', '+' || ? || ' days')")
     .replace(/\bENGINE=InnoDB\b/gi, "")
     .replace(/\bAUTO_INCREMENT\b/gi, "AUTOINCREMENT")
     .replace(/\bBOOLEAN\b/gi, "INTEGER")
@@ -69,7 +68,7 @@ const sqlitePool = {
     beginTransaction: async () => run('BEGIN TRANSACTION'),
     commit: async () => run('COMMIT'),
     rollback: async () => run('ROLLBACK'),
-    release: () => {}
+    release: () => { }
   })
 };
 
