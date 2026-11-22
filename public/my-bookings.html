@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Bookings | CinePass</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-film"></i>
+        <span>CINE</span>PASS
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="my-bookings.html" class="nav-link active"><i class="fa-solid fa-ticket-simple"></i> My Bookings</a>
+        <a href="admin.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Admin Portal</a>
+        <div id="db-status-badge" class="db-badge">
+          <span class="pulse-dot"></span> Live MySQL 8.0
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding: 3rem 0 5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">My Booked Tickets</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Manage your active cinema reservations and lookup past bookings.</p>
+      </div>
+      <div id="bookings-count" style="color: var(--text-dim); font-size: 0.9rem; font-weight: 600;">
+        Loading bookings...
+      </div>
+    </div>
+
+    <!-- Search / Filter Card -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 2rem;">
+      <div style="position: relative;">
+        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+        <input type="text" id="search-bookings-input" class="form-control" style="padding-left: 2.8rem;" placeholder="Search by booking reference (e.g. CP-98124), movie title, email or phone..." />
+      </div>
+    </div>
+
+    <!-- Bookings List Container -->
+    <div id="bookings-list-container">
+      <!-- Populated dynamically by my-bookings.js -->
+    </div>
+  </div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div class="modal-backdrop" id="cancel-modal" onclick="if(event.target === this) closeCancelModal()">
+    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; max-width: 480px; width: 100%; box-shadow: var(--shadow-lg);">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; font-size: 1.6rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 800;">Cancel This Booking?</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+          Booking Reference: <strong id="cancel-modal-ref" style="color: #fff; font-family: monospace;">CP-XXXXX</strong>
+        </p>
+        <p style="color: #cbd5e1; font-size: 0.85rem; margin-top: 0.5rem;">
+          Cancelling will immediately release your reserved seats back into the live MySQL database for other users to book, and initiate a full payment refund.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-secondary btn-block" onclick="closeCancelModal()">Keep Booking</button>
+        <button class="btn btn-primary btn-block" style="background: #dc2626;" onclick="confirmCancelBooking()">Confirm Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+      &copy; 2026 CinePass Ticket Booking System • Live MySQL 8.0 ACID Database
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/my-bookings.js"></script>
+</body>
+</html>
+

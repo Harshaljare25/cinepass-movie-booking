@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinePass | Online Movie Ticket Booking</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-film"></i>
+        <span>CINE</span>PASS
+      </a>
+
+      <div class="nav-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="search-movies-input" placeholder="Search movies, cast, director, genres..." />
+      </div>
+
+      <div class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link active"><i class="fa-solid fa-compass"></i> Explore</a>
+        <a href="my-bookings.html" class="nav-link"><i class="fa-solid fa-ticket-simple"></i> My Bookings</a>
+        <a href="admin.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Admin Portal</a>
+        <div id="db-status-badge" class="db-badge" title="Checking database...">
+          <span class="pulse-dot"></span> Checking DB...
+        </div>
+      </div>
+
+      <button class="menu-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Billboard Showcase -->
+  <section class="hero-section">
+    <div class="hero-backdrop" id="hero-backdrop"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badges">
+          <span class="badge-pill badge-featured"><i class="fa-solid fa-fire"></i> TRENDING NOW</span>
+          <span class="badge-pill badge-rating" id="hero-rating"><i class="fa-solid fa-star"></i> 8.8</span>
+          <span class="badge-pill badge-format" id="hero-formats">IMAX with Laser</span>
+        </div>
+        <h1 class="hero-title" id="hero-title">Loading Featured Movies...</h1>
+        <p class="hero-tagline" id="hero-tagline"></p>
+        <div class="hero-meta">
+          <span id="hero-cert" class="cert-badge">UA 16+</span>
+          <span id="hero-duration"><i class="fa-regular fa-clock"></i> 166 mins</span>
+          <span id="hero-lang"><i class="fa-solid fa-globe"></i> English</span>
+        </div>
+        <p class="hero-desc" id="hero-desc">
+          Experience cinema like never before with premium sound, ultra 4K crystal laser projection and luxury recliner seating.
+        </p>
+        <div class="hero-actions">
+          <a href="#" id="hero-book-btn" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-ticket"></i> Book Tickets
+          </a>
+          <button id="hero-trailer-btn" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-play"></i> Watch Trailer
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-carousel-dots" id="hero-dots"></div>
+  </section>
+
+  <!-- Filters Bar -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar">
+        <div class="genre-pills">
+          <button class="genre-pill active" data-genre="All">All Genres</button>
+          <button class="genre-pill" data-genre="Action">Action</button>
+          <button class="genre-pill" data-genre="Sci-Fi">Sci-Fi</button>
+          <button class="genre-pill" data-genre="Drama">Drama</button>
+          <button class="genre-pill" data-genre="Comedy">Comedy</button>
+          <button class="genre-pill" data-genre="Animation">Animation</button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <select id="format-filter-select" class="form-control" style="width: auto; padding: 0.45rem 1rem; font-size: 0.85rem; border-radius: var(--radius-full);">
+            <option value="All">All Formats</option>
+            <option value="IMAX">IMAX 70mm / Laser</option>
+            <option value="4DX">4DX Motion</option>
+            <option value="3D">RealD 3D</option>
+            <option value="2D">Standard 2D</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Movies Section -->
+  <main class="movies-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-clapperboard"></i> Now Showing in Theaters</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.3rem;">Select a movie to choose your showtime and book live seats</p>
+        </div>
+        <div id="movies-count" style="color: var(--text-dim); font-size: 0.9rem; font-weight: 600;">
+          Loading...
+        </div>
+      </div>
+
+      <div class="movie-grid" id="movie-grid">
+        <!-- Rendered dynamically by main.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Cinema Experience Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto 3rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.5rem;">Why Book With CinePass?</h2>
+        <p style="color: var(--text-muted);">The next generation movie booking platform powered by real-time relational SQL transactions and instant contactless entry.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon"><i class="fa-solid fa-couch"></i></div>
+          <h3 class="feature-title">Live Interactive Seat Map</h3>
+          <p class="feature-desc">Visual seat matrix with VIP recliners, screen orientation, and real-time locking against duplicate bookings.</p>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon"><i class="fa-solid fa-database"></i></div>
+          <h3 class="feature-title">Live SQL ACID Transactions</h3>
+          <p class="feature-desc">Guaranteed zero double-booking concurrency through strict SQL relational constraints and instant rollbacks.</p>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon"><i class="fa-solid fa-burger"></i></div>
+          <h3 class="feature-title">Gourmet Concessions</h3>
+          <p class="feature-desc">Pre-order warm butter popcorn, loaded nachos, and chilled craft beverages directly delivered to your seat.</p>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon"><i class="fa-solid fa-qrcode"></i></div>
+          <h3 class="feature-title">Digital QR E-Tickets</h3>
+          <p class="feature-desc">Immediate scannable digital boarding pass with print & PDF download capabilities for fast theater entry.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trailer Lightbox Modal -->
+  <div class="modal-backdrop" id="trailer-modal" onclick="if(event.target === this) closeTrailerModal()">
+    <div class="trailer-modal-content">
+      <button class="modal-close-btn" onclick="closeTrailerModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div style="padding: 1rem 1.5rem; background: #121721; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 0.6rem;">
+        <i class="fa-solid fa-circle-play" style="color: var(--accent-red);"></i>
+        <span id="trailer-title" style="font-weight: 700; font-size: 1.05rem;">Trailer</span>
+      </div>
+      <div class="video-responsive">
+        <iframe id="trailer-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo">
+            <i class="fa-solid fa-film"></i>
+            <span>CINE</span>PASS
+          </a>
+          <p>The premier online movie ticketing web application built with clean HTML5, modern CSS3, Vanilla JavaScript and a live MySQL relational database.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Now Showing</a></li>
+            <li><a href="my-bookings.html">My Bookings</a></li>
+            <li><a href="admin.html">Admin Dashboard</a></li>
+            <li><a href="admin.html#sql-sandbox">SQL Console</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Promo Codes</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="showToast('Use promo code CINEMA50 for ₹50 off!', 'info')">CINEMA50 (₹50 Off)</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Use promo code FIRST100 for ₹100 off!', 'info')">FIRST100 (₹100 Off)</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Use promo code VIP20 for 20% off!', 'info')">VIP20 (20% Off)</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Database Architecture</h4>
+          <div class="db-live-box">
+            <div><span>Engine:</span> <strong style="color: #34d399;">MySQL 8.0 Live</strong></div>
+            <div><span>Database:</span> <code>movie_booking_db</code></div>
+            <div><span>Tables:</span> <span>8 Normalized Tables</span></div>
+            <div><span>Integrity:</span> <span>ACID Transactions</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 CinePass Ticket Booking System. All Rights Reserved.</div>
+        <div>Engineered with HTML, CSS, JavaScript & Live MySQL</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
+

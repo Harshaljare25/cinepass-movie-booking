@@ -1,0 +1,403 @@
+/* ===================================================================
+   CinePass - Admin Dashboard & SQL Console Styles
+   =================================================================== */
+
+.admin-container {
+  padding: 2.5rem 0 5rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.admin-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.admin-tab-btn:hover {
+  color: var(--text-main);
+}
+
+.admin-tab-btn.active {
+  color: var(--accent-red);
+  border-bottom-color: var(--accent-red);
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.stat-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-icon.revenue {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.stat-icon.tickets {
+  background: rgba(229, 9, 20, 0.15);
+  color: var(--accent-red);
+}
+
+.stat-icon.shows {
+  background: rgba(0, 210, 255, 0.15);
+  color: var(--accent-cyan);
+}
+
+.stat-icon.database {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--accent-gold);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.stat-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-top: 0.2rem;
+}
+
+/* Data Tables */
+.table-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.table-header-box {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.admin-table th {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-muted);
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.status-badge.confirmed {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #10b981;
+}
+
+.status-badge.cancelled {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+/* ===================================================================
+   Live SQL Console & Query Runner
+   =================================================================== */
+.sql-console-box {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sql-editor-textarea {
+  width: 100%;
+  height: 120px;
+  background: #07090d;
+  border: 1px solid #30363d;
+  border-radius: var(--radius-md);
+  color: #58a6ff;
+  font-family: 'Consolas', 'Fira Code', 'Monaco', monospace;
+  font-size: 0.95rem;
+  padding: 1rem;
+  resize: vertical;
+  outline: none;
+  transition: var(--transition);
+}
+
+.sql-editor-textarea:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+}
+
+.sql-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sample-queries-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sample-sql-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sample-sql-pill:hover {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: #58a6ff;
+  color: #58a6ff;
+}
+
+.sql-result-metrics {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+}
+
+/* ===================================================================
+   Digital E-Ticket Cinema Boarding Pass
+   =================================================================== */
+.ticket-wrapper {
+  max-width: 650px;
+  margin: 3rem auto;
+  position: relative;
+  background: #141a26;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, var(--accent-red), #88050c);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.ticket-body {
+  padding: 2rem;
+}
+
+.ticket-movie-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ticket-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ticket-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+}
+
+.ticket-info-item label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.ticket-info-item span {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.ticket-qr-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+#ticket-qrcode {
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.ticket-barcode-lines {
+  display: flex;
+  gap: 2px;
+  height: 40px;
+  align-items: stretch;
+  margin-top: 0.5rem;
+}
+
+.barcode-bar {
+  background: #94a3b8;
+  width: 2px;
+}
+
+.barcode-bar.thick {
+  width: 4px;
+}
+
+/* Ticket Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .ticket-wrapper, .ticket-wrapper * {
+    visibility: visible;
+  }
+  .ticket-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .ticket-header {
+    background: #e50914 !important;
+    color: #fff !important;
+  }
+  .ticket-body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .ticket-info-grid {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #000000 !important;
+  }
+  .ticket-info-item span {
+    color: #000000 !important;
+  }
+  .ticket-actions-bar, .navbar, .footer {
+    display: none !important;
+  }
+}
+

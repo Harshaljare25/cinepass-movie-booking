@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Tickets | CinePass</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap"
+    rel="stylesheet" />
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/seat-map.css" />
+</head>
+
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-film"></i>
+        <span>CINE</span>PASS
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Back to Movies</a>
+        <a href="my-bookings.html" class="nav-link"><i class="fa-solid fa-ticket-simple"></i> My Bookings</a>
+        <a href="admin.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Admin Portal</a>
+        <div id="db-status-badge" class="db-badge">
+          <span class="pulse-dot"></span> Live MySQL 8.0
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Movie Header Banner -->
+  <header class="booking-page-header">
+    <div class="header-backdrop" id="header-backdrop"></div>
+    <div class="container">
+      <div class="booking-header-content">
+        <img src="" alt="Movie Poster" class="header-poster" id="header-poster" />
+        <div class="header-details">
+          <h1 id="header-title">Loading Movie...</h1>
+          <div class="header-meta" id="header-meta">
+            <!-- Rendered by booking.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Step Indicator -->
+  <div class="booking-steps">
+    <div class="step-item active" id="step-1">
+      <span class="step-number">1</span>
+      <span>Select Showtime</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" id="step-2">
+      <span class="step-number">2</span>
+      <span>Choose Seats</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" id="step-3">
+      <span class="step-number">3</span>
+      <span>Food & Drinks</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" id="step-4">
+      <span class="step-number">4</span>
+      <span>Payment</span>
+    </div>
+  </div>
+
+  <!-- Date Selection Bar -->
+  <div class="date-selector-bar">
+    <div class="container">
+      <div class="date-cards-scroll" id="date-cards-scroll">
+        <!-- Rendered by booking.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Theaters & Showtimes List -->
+  <section class="theaters-section" style="padding: 2.5rem 0;">
+    <div class="container">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800;">Select Cinema & Showtime</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Pick an auditorium format and show slot to reveal the
+          live seat matrix</p>
+      </div>
+
+      <div id="theaters-container">
+        <!-- Theaters rendered by booking.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Cinema Seat Booking Matrix Section (Shown when showtime is selected) -->
+  <section class="seat-booking-container" id="seat-booking-section"
+    style="display: none; background: #0c0f17; border-top: 1px solid var(--border-color);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px;">Choose Your Seats</h2>
+        <div id="selected-show-details"
+          style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; flex-wrap: wrap;">
+          <!-- Theater, Screen, Show time details -->
+        </div>
+      </div>
+
+      <!-- Projection Screen Visual -->
+      <div class="screen-visual-wrapper">
+        <div class="screen-curve"></div>
+        <div class="screen-text"><i class="fa-solid fa-eye" style="margin-right: 6px;"></i> ALL EYES THIS WAY • CINEMA
+          SCREEN</div>
+      </div>
+
+      <!-- Seat Legend -->
+      <div class="seat-legend">
+        <div class="legend-item">
+          <span class="legend-seat available"></span>
+          <span>Available</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat selected"></span>
+          <span>Selected</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat booked"></span>
+          <span>Booked / Taken</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat vip"></span>
+          <span>VIP Recliner (<span id="legend-vip-price">₹550</span>)</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat available" style="border-color: #6366f1;"></span>
+          <span>Premium (<span id="legend-premium-price">₹360</span>)</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat available"></span>
+          <span>Standard (<span id="legend-standard-price">₹240</span>)</span>
+        </div>
+      </div>
+
+      <!-- Interactive Seat Matrix -->
+      <div class="seat-matrix-wrapper" id="seat-matrix-wrapper">
+        <!-- Generated dynamically by booking.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Bottom Order Bar -->
+  <div class="floating-booking-bar" id="floating-booking-bar">
+    <div class="container booking-bar-content">
+      <div class="bar-seats-info">
+        <div>
+          <span
+            style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: block;">Selected
+            Seats</span>
+          <div class="selected-seat-chips" id="bar-seat-chips">
+            <!-- Seat chips -->
+          </div>
+        </div>
+        <div style="border-left: 1px solid rgba(255, 255, 255, 0.1); padding-left: 1.5rem;">
+          <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Tickets</span>
+          <span id="bar-seat-count" style="font-weight: 800; font-size: 1.1rem; color: #fff;">0 Seats</span>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <div class="bar-price-col">
+          <div class="bar-price-label">Total Amount</div>
+          <div class="bar-price-val" id="bar-total-price">₹0.00</div>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="openCheckoutModal()">
+          <span>Proceed to Checkout</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Concessions & Checkout Modal -->
+  <div class="modal-backdrop" id="checkout-modal" onclick="if(event.target === this) closeCheckoutModal()">
+    <div class="checkout-modal-content">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        <h2 style="font-size: 1.4rem; font-weight: 800;"><i class="fa-solid fa-lock"
+            style="color: var(--accent-red); margin-right: 0.5rem;"></i> Complete Your Booking</h2>
+        <button class="modal-close-btn" style="position: static;" onclick="closeCheckoutModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Add Snacks Section -->
+      <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fa-solid fa-burger" style="color: var(--accent-gold);"></i> Add Cinema Snacks & Combos (Optional)
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Pre-order fresh hot popcorn and chilled beverages to
+          skip the counter queue.</p>
+
+        <div class="concessions-grid" id="concessions-grid">
+          <!-- Populated by booking.js -->
+        </div>
+      </div>
+
+      <!-- Checkout Form & Breakdown Grid -->
+      <div class="checkout-grid">
+        <!-- Customer Details Form -->
+        <div>
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem;">
+            <i class="fa-regular fa-user" style="color: var(--accent-cyan); margin-right: 0.4rem;"></i> Contact
+            Information
+          </h3>
+
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="cust-name" class="form-control" placeholder="Enter your full name" required />
+          </div>
+
+          <div class="form-group">
+            <label>Email Address (For E-Ticket delivery) *</label>
+            <input type="email" id="cust-email" class="form-control" placeholder="e.g. name@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 9876543210" required />
+          </div>
+
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin: 1.5rem 0 0.8rem;">
+            <i class="fa-regular fa-credit-card" style="color: var(--accent-green); margin-right: 0.4rem;"></i> Payment
+            Method
+          </h3>
+          <div class="payment-method-selector">
+            <div class="payment-option active" data-method="Credit/Debit Card"
+              onclick="selectPaymentMethod(this, 'Credit/Debit Card')">
+              <i class="fa-solid fa-credit-card"></i> Card
+            </div>
+            <div class="payment-option" data-method="UPI / QR Code"
+              onclick="selectPaymentMethod(this, 'UPI / QR Code')">
+              <i class="fa-solid fa-qrcode"></i> UPI / QR
+            </div>
+            <div class="payment-option" data-method="Net Banking" onclick="selectPaymentMethod(this, 'Net Banking')">
+              <i class="fa-solid fa-building-columns"></i> Net Banking
+            </div>
+            <div class="payment-option" data-method="Digital Wallet"
+              onclick="selectPaymentMethod(this, 'Digital Wallet')">
+              <i class="fa-solid fa-wallet"></i> Wallet
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Breakdown -->
+        <div>
+          <div class="order-breakdown-card">
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem;" id="summary-movie-title">Booking
+              Summary</h4>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;" id="summary-cinema">--</div>
+
+            <div class="breakdown-row">
+              <span>Seats:</span>
+              <strong style="color: #fff;" id="summary-seats">--</strong>
+            </div>
+            <div class="breakdown-row">
+              <span>Ticket Subtotal:</span>
+              <span id="summary-tickets-subtotal">₹0.00</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Snacks & Concessions:</span>
+              <span id="summary-concessions-subtotal">₹0.00</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Convenience Fee (incl. GST):</span>
+              <span id="summary-fee">₹35.00</span>
+            </div>
+            <div class="breakdown-row" id="summary-discount-row" style="display: none; color: #10b981;">
+              <span>Promo Discount:</span>
+              <span id="summary-discount">-₹0.00</span>
+            </div>
+
+            <!-- Promo Code Input -->
+            <div class="promo-input-group">
+              <input type="text" id="promo-code-input" class="form-control" placeholder="Promo code (CINEMA50)" />
+              <button class="btn btn-secondary btn-sm" onclick="applyPromoCode()">Apply</button>
+            </div>
+            <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: -0.4rem; margin-bottom: 0.8rem;">
+              Try: <code>CINEMA50</code> for ₹50 off or <code>VIP20</code> for 20% off
+            </div>
+
+            <div class="breakdown-row total-row">
+              <span>Total Payable:</span>
+              <span id="summary-grand-total">₹0.00</span>
+            </div>
+
+            <button id="confirm-booking-btn" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.25rem;"
+              onclick="submitBooking()">
+              <i class="fa-solid fa-lock"></i> Confirm & Pay Securely
+            </button>
+            <div style="text-align: center; margin-top: 0.6rem; font-size: 0.72rem; color: var(--text-dim);">
+              <i class="fa-solid fa-shield-halved" style="color: var(--accent-green);"></i> 256-Bit Encrypted Live
+              Database Transaction
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top: 4rem;">
+    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+      &copy; 2026 CinePass Ticket Booking System • Live MySQL 8.0 ACID Database
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/booking.js"></script>
+</body>
+
+</html>
